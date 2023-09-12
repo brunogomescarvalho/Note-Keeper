@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Nota } from '../notas-model/nota';
-import { ComunicacaoService } from 'src/app/services/comunicacao.service';
+import { ComunicacaoService } from 'src/app/services/eventosService/comunicacao.service';
 
 @Component({
   selector: 'app-notas-card',
@@ -11,10 +11,10 @@ export class NotasCardComponent {
 
   @Input() nota?: Nota;
 
-  constructor(private servicoEvents: ComunicacaoService) {}
+  constructor(private servicoEvents: ComunicacaoService) { }
 
 
   public excluir(id: any) {
-    this.servicoEvents.emitirEvento(id, "excluir")
+    this.servicoEvents.emitirExcluirNota(id)
   }
 }

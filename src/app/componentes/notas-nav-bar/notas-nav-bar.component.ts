@@ -5,6 +5,4 @@ import { Component } from '@angular/core';
   templateUrl: './notas-nav-bar.component.html',
   styleUrls: ['./notas-nav-bar.component.css']
 })
-export class NotasNavBarComponent {
-
-}
+export class NotasNavBarComponent { }

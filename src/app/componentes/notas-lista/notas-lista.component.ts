@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Nota } from '../notas-model/nota';
-import { ComunicacaoService } from 'src/app/services/comunicacao.service';
+import { ComunicacaoService } from 'src/app/services/eventosService/comunicacao.service';
 
 @Component({
   selector: 'app-notas-lista',
@@ -14,21 +14,19 @@ export class NotasListaComponent implements OnInit {
   constructor(private eventService: ComunicacaoService) { }
 
   ngOnInit(): void {
-    this.eventService.receberEvento().subscribe((evento: any) => {
+    this.registrarEventos();
 
-      switch (evento.acao) {
-        case "inserir":
-          this.notas.push(evento.obj)
-          break;
+  }
 
-        default:
-          let index = this.notas.findIndex(x => evento.obj == x.id);
-          this.notas.splice(index, 1);
-          break;
-      }
+  private registrarEventos() {
+    this.eventService.eventSalvarNotas().subscribe((nota: Nota) => {
+      this.notas.push(nota);
+    });
 
-    })
-
+    this.eventService.eventExcluirNotas().subscribe((id: number) => {
+      let index = this.notas.findIndex(x => id == x.id);
+      this.notas.splice(index, 1);
+    });
   }
 }
 

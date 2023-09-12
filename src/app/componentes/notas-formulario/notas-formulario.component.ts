@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Nota } from '../notas-model/nota';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ComunicacaoService } from 'src/app/services/comunicacao.service';
-
+import { ComunicacaoService } from 'src/app/services/eventosService/comunicacao.service';
 
 @Component({
   selector: 'app-notas-formulario',
@@ -15,7 +14,7 @@ export class NotasFormularioComponent implements OnInit {
 
   id: number = 1;
 
-  constructor(private eventService: ComunicacaoService) {}
+  constructor(private eventService: ComunicacaoService) { }
 
   ngOnInit(): void {
     this.formulario(new Nota())
@@ -23,21 +22,21 @@ export class NotasFormularioComponent implements OnInit {
 
   formulario(nota: Nota) {
     this.formNotas = new FormGroup({
-           conteudo: new FormControl(nota.conteudo, [Validators.required]),
-               tema: new FormControl(nota.tema)
+      conteudo: new FormControl(nota.conteudo, [Validators.required]),
+      tema: new FormControl(nota.tema)
     })
   }
 
   onSubmit() {
     if (this.formNotas.valid) {
       let nota: Nota = {
-         id: this.id++,
-          titulo: "",
-           conteudo: this.formNotas.value.conteudo,
-            tema: this.formNotas.value.tema
+        id: this.id++,
+        titulo: "",
+        conteudo: this.formNotas.value.conteudo,
+        tema: this.formNotas.value.tema
       }
       this.formNotas.reset();
-      this.eventService.emitirEvento(nota, "inserir");
+      this.eventService.emitirSalvarNota(nota);
     }
   }
 }
