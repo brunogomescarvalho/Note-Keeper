@@ -27,6 +27,8 @@ export class NotasListaComponent implements OnInit {
       let index = this.notas.findIndex(x => id == x.id);
       this.notas.splice(index, 1);
     });
+
+    
   }
 }
 

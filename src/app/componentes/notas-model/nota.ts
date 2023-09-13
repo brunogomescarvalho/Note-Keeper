@@ -6,4 +6,4 @@ export class Nota {
 
 }
 
-type Tema = "primary" | "danger" | "warning" 
+export type Tema = "primary" | "danger" | "warning" 
