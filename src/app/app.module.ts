@@ -10,6 +10,8 @@ import { NotasListaComponent } from './componentes/notas-lista/notas-lista.compo
 import { NotasNavBarComponent } from './componentes/notas-nav-bar/notas-nav-bar.component';
 import { NotasHistoricoComponent } from './componentes/notas-historico/notas-historico.component';
 import { NotasHomeComponent } from './componentes/notas-home/notas-home.component';
+import { BarraCoresComponent } from './componentes/barra-cores/barra-cores.component';
+import { HttpClientModule } from '@angular/common/http'
 
 @NgModule({
   declarations: [
@@ -20,6 +22,7 @@ import { NotasHomeComponent } from './componentes/notas-home/notas-home.componen
     NotasNavBarComponent,
     NotasHistoricoComponent,
     NotasHomeComponent,
+    BarraCoresComponent,
 
   ],
   imports: [
@@ -27,6 +30,8 @@ import { NotasHomeComponent } from './componentes/notas-home/notas-home.componen
     AppRoutingModule,
     NgbModule,
     ReactiveFormsModule,
+    HttpClientModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

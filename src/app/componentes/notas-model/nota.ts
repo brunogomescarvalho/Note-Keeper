@@ -1,8 +1,13 @@
 export class Nota {
-    id?: number;
-    titulo?: string;
-    conteudo?: string
+    id?: number
     tema?: Tema
+    titulo?: string
+    conteudo?: string
+    arquivado?: boolean
+
+    constructor() {
+        this.arquivado = false;
+    }
 
 }
 
