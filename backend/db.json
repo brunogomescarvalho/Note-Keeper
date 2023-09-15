@@ -1,11 +1,21 @@
 {
-  "nota": [
+  "nota": [],
+  "categoria": [
     {
-      "arquivado": false,
       "id": 1,
-      "titulo": "",
-      "conteudo": "nova nota",
-      "tema": "primary"
+      "nome": "Mercado"
+    },
+    {
+      "nome": "Viagem",
+      "id": 2
+    },
+    {
+      "nome": "Combustível",
+      "id": 4
+    },
+    {
+      "nome": "Trabalho",
+      "id": 5
     }
   ]
 }

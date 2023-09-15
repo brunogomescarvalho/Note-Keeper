@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Nota } from '../notas-model/nota';
-import { HttpService } from 'src/app/services/httpService/http.service';
+import { Nota } from '../../models/nota';
+import { NotasHttpService } from 'src/app/services/httpService/notas/notas-http.service';
 import { take } from 'rxjs';
 
 @Component({
@@ -10,7 +10,7 @@ import { take } from 'rxjs';
 })
 export class NotasHistoricoComponent implements OnInit {
 
-  constructor(private serviceHttp: HttpService) { }
+  constructor(private serviceHttp: NotasHttpService) { }
 
   @Input() notas!: Nota[];
 

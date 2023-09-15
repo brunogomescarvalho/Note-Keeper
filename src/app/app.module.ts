@@ -11,7 +11,12 @@ import { NotasNavBarComponent } from './componentes/notas-nav-bar/notas-nav-bar.
 import { NotasHistoricoComponent } from './componentes/notas-historico/notas-historico.component';
 import { NotasHomeComponent } from './componentes/notas-home/notas-home.component';
 import { BarraCoresComponent } from './componentes/barra-cores/barra-cores.component';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
+import { CategoriaTableComponent } from './componentes/categoria-table/categoria-table.component';
+import { CategoriaFormComponent } from './componentes/categoria-form/categoria-form.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { NotasEditarFormComponent } from './componentes/notas-editar-form/notas-editar-form.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +28,9 @@ import { HttpClientModule } from '@angular/common/http'
     NotasHistoricoComponent,
     NotasHomeComponent,
     BarraCoresComponent,
+    CategoriaTableComponent,
+    CategoriaFormComponent,
+    NotasEditarFormComponent,
 
   ],
   imports: [
@@ -30,7 +38,14 @@ import { HttpClientModule } from '@angular/common/http'
     AppRoutingModule,
     NgbModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+
+    ToastrModule.forRoot({
+      timeOut: 5000,
+      preventDuplicates: true,
+      positionClass:"toast-top-rigth"
+    }),
 
   ],
   providers: [],

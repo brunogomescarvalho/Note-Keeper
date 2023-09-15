@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpService } from 'src/app/services/httpService/http.service';
-import { Nota } from '../notas-model/nota';
+import { NotasHttpService } from 'src/app/services/httpService/notas/notas-http.service';
+import { Nota } from '../../models/nota';
 import { take } from 'rxjs';
 
 @Component({
@@ -12,7 +12,7 @@ export class NotasHomeComponent implements OnInit {
 
   notas: Nota[] = []
 
-  constructor(private serviceHttp: HttpService) { }
+  constructor(private serviceHttp: NotasHttpService) { }
 
   ngOnInit(): void {
     this.obterListaNotas();

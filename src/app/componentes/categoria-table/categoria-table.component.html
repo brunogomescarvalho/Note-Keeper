@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="row d-flex flex-column justify-content-center">
+        <div class="col text-center m-3">
+            <h2 class="fs-4">Categorias</h2>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-6  col-md-8 col-sm-12">
+            <div class="input-group mb-3 col-lg-6 col-md-8 col-sm-12">
+                <a class="link-offset-2 text-center" routerLink="../../categoria/cadastrar">Cadastrar nova Categoria</a>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let categoria of categorias index as i">
+                        <td>{{categoria?.id}}</td>
+                        <td>{{categoria?.nome}}</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                <button type="button" class="btn btn-warning">Editar</button>
+                                <button type="button" class="btn btn-danger">Excluir</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

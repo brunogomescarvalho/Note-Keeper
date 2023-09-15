@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Nota } from 'src/app/componentes/notas-model/nota';
+import { Nota } from 'src/app/models/nota';
 
 @Injectable({
   providedIn: 'root'
 })
-export class HttpService {
+export class NotasHttpService {
 
   private url = "http://localhost:3000/nota"
 
@@ -34,6 +34,6 @@ export class HttpService {
   }
 
   public selecionarPorId(id: number): Observable<Nota> {
-    return this.httpService.get<Nota>(`${this.url}/${id}`)
+    return this.httpService.get<Nota>(`${this.url}/${id}?_embed=categoria`)
   }
 }

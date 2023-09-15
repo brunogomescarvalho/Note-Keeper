@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { Tema } from '../notas-model/nota';
+import { Tema } from '../../models/nota';
 
 @Component({
   selector: 'app-barra-cores',
