@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Nota, Tema } from '../../models/nota';
 import { ComunicacaoService } from 'src/app/services/eventosService/comunicacao.service';
 import { NotasHttpService } from 'src/app/services/httpService/notas/notas-http.service';
@@ -18,9 +18,14 @@ export class NotasCardComponent implements OnInit {
 
   @Input() nota: Nota = {} as Nota;
 
-  categoria: Categoria = {} as Categoria;
+  @Input() categoria: Categoria = {} as Categoria;
 
-  mostrar: boolean = false;
+  @Input() mostrarCores: boolean = false;
+
+  @Input() mostrarButtons: boolean = true;
+
+  @Output() onEnviarTema = new EventEmitter();
+
 
   constructor(
     private servicoEvents: ComunicacaoService,
@@ -47,29 +52,31 @@ export class NotasCardComponent implements OnInit {
 
   public excluir(id: any) {
     this.serviceHttp.excluirNota(id)
-      .pipe(take(1))
-      .subscribe(() => {
+      .pipe(take(1)).subscribe(() => {
         this.servicoEvents.emitirExcluirNota(id)
       })
   }
 
-  public mostrarCores() {
-    this.mostrar = !this.mostrar
+  public mostrarQuadroCores() {
+    this.mostrarCores = !this.mostrarCores;
   }
+
 
   public receberCorSelecionada = (event: Event) => {
     let tema = event as unknown
     this.nota.tema = tema as Tema
-    this.serviceHttp.editarNota(this.nota)
-      .pipe(take(1))
-      .subscribe();
+
+    if (this.mostrarButtons)
+      this.serviceHttp.editarNota(this.nota).pipe(take(1)).subscribe();
+    else
+      this.onEnviarTema.emit(tema);
+
   }
 
   public arquivar(nota: Nota) {
     nota.arquivado = !nota.arquivado
     this.serviceHttp.arquivarNota(nota)
-      .pipe(take(1))
-      .subscribe((dado: Nota) => {
+      .pipe(take(1)).subscribe((dado: Nota) => {
         this.servicoEvents.emitirExcluirNota(dado.id!);
         this.toast.success(`Nota ${nota.arquivado ? 'arquivada' : 'desarquivada'}`);
       });

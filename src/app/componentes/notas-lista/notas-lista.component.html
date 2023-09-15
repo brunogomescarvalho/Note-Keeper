@@ -1,5 +1,14 @@
-<section>
-    <div *ngFor="let nota of notas">
-        <app-notas-card  [nota]="nota"></app-notas-card>
+<div class="container">
+    <hr>
+    <div class="row">
+        <app-notas-filtrar (onEnviarCategoria)="eventoReceberCategoria($event)" [categorias]="categorias"></app-notas-filtrar>
     </div>
-</section>
+    <div class="col">
+        <H2 class="text-center text-secondary fs-4">Minhas Notas</H2>
+    </div>
+    <div class="row">
+        <div *ngFor="let nota of notas" class="col-6 col-md-4 col-lg-3">
+            <app-notas-card [nota]="nota"></app-notas-card>
+        </div>
+    </div>
+</div>

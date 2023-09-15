@@ -15,10 +15,10 @@ export class NotasHistoricoComponent implements OnInit {
   @Input() notas!: Nota[];
 
   ngOnInit(): void {
-    this.serviceHttp.selecionarTodos()
+    this.serviceHttp.selecionarTodos(true)
       .pipe(take(1))
-        .subscribe((dados: Nota[]) => {
-          this.notas = dados.filter(x => x.arquivado === true)
+      .subscribe((dados: Nota[]) => {
+        this.notas = dados
       })
   }
 

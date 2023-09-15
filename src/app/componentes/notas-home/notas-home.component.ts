@@ -19,11 +19,10 @@ export class NotasHomeComponent implements OnInit {
   }
 
   private obterListaNotas() {
-    this.serviceHttp.selecionarTodos()
-    .pipe(take(1))
-       .subscribe((dados) => {
-        this.notas = dados.filter((x: Nota) =>
-             x.arquivado === false);
+    this.serviceHttp.selecionarTodos(false)
+      .pipe(take(1))
+         .subscribe((dados) => {
+           this.notas = dados;
       });
   }
 }

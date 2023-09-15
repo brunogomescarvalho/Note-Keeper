@@ -1,11 +1,10 @@
-<div class="container d-flex flex-column m-4">
-    <div class="row justify-content-center m-3">
-      <div class="m-3">
-        <app-notas-formulario></app-notas-formulario>
-      </div>
-      <div class="pt-3">
-        <app-notas-lista [notas]="notas"></app-notas-lista>
-      </div>
+<div class="container m-4">
+  <div class="row justify-content-center m-3">
+    <div class="m-3">
+      <a routerLink="/notas/criar" type=button class="btn btn-primary">Criar Nova Nota</a>
+    </div>
+    <div class="pt-3">
+      <app-notas-lista [notas]="notas"></app-notas-lista>
     </div>
   </div>
- 
+</div>
