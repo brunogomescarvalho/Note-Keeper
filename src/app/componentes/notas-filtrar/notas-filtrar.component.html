@@ -1,10 +1,9 @@
 <section>
     <div class="row">
-        <div class="m-2 col-4 col-lg-2 col-md-4">
+        <div class="d-flex justify-content-center align-items-center m-2 col-4 col-lg-2 col-md-4">
             <button (click)="buscarTodos()" class="btn btn-outline-primary">Todos</button>
         </div>
-
-        <div *ngFor="let categoria of categorias" class=" m-2 col-4 col-lg-2 col-md-4">
+        <div *ngFor="let categoria of categorias" class="d-flex justify-content-center align-items-center m-2 col-4 col-lg-2 col-md-4">
             <button (click)="enviarCategoria(categoria)" class="btn btn-outline-primary">{{categoria.nome}}</button>
         </div>
     </div>

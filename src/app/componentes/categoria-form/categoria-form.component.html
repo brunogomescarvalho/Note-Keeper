@@ -1,18 +1,19 @@
 <div class="container">
     <div class="row justify-content-center mt-3">
         <div class="col-lg-6  col-md-8 col-sm-12">
-            <h2 class="fs-4">Cadastrar Categoria</h2>
+            <h2 class="fs-4">{{editar? 'Editar': 'Cadastrar'}} Categoria</h2>
         </div>
     </div>
     <div class="row justify-content-center mt-3">
         <div class="col-lg-6  col-md-8 col-sm-12">
-            <form [formGroup]="formulario"(ngSubmit)="onSubmit()">
+            <form (ngSubmit)="onSubmit()">
                 <div class="mb-3 form-check ps-0">
-                  <input type="text"class="form-control" id="exampleCheck1" formControlName="nome">
-                  <label class="form-check-label" for="exampleCheck1">Nome</label>
+                    <input [(ngModel)]="categoria.nome" type="text" class="form-control" id="exampleCheck1" [ngModelOptions]="{standalone: true}">
+                    <label class="form-check-label" for="exampleCheck1">Nome</label>
                 </div>
-                <button type="submit" class="btn btn-primary">Salvar</button>
-              </form>
+                <button type="submit" class="me-2 btn btn-success">{{editar?'Editar':'Salvar'}}</button>
+                <button (click)="voltar()"class="btn btn-primary">Voltar</button>
+            </form>
         </div>
     </div>
 </div>

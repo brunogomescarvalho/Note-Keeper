@@ -1,20 +1,15 @@
 {
   "nota": [
     {
-      "titulo": "fdfdfdsf",
-      "conteudo": "fdsdsfdfdd",
-      "tema": "danger",
-      "id": 2,
-      "arquivado": true,
-      "categoriaId": 2,
-      "categoria": []
+      "titulo": "bob",
+      "conteudo": "gfgfgfg",
+      "tema": "primary",
+      "id": 6,
+      "arquivado": false,
+      "categoriaId": 2
     }
   ],
   "categoria": [
-    {
-      "id": 1,
-      "nome": "Mercado"
-    },
     {
       "nome": "Viagem",
       "id": 2
@@ -24,7 +19,7 @@
       "id": 4
     },
     {
-      "nome": "Trabalho",
+      "nome": "Supermercado",
       "id": 5
     }
   ]

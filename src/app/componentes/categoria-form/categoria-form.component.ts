@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { take } from 'rxjs';
+import { Observable, first } from 'rxjs';
 import { Categoria } from 'src/app/models/categoria';
 import { CategoriaHttpService } from 'src/app/services/httpService/categoria/categoria-http.service';
 
@@ -13,38 +13,50 @@ import { CategoriaHttpService } from 'src/app/services/httpService/categoria/cat
 export class CategoriaFormComponent implements OnInit {
 
   categoria!: Categoria;
-  formulario!: FormGroup;
+  editar = false;
 
   constructor(
-    private service: CategoriaHttpService, 
-    private toast: ToastrService) {
+    private service: CategoriaHttpService,
+    private toast: ToastrService,
+    private router: Router,
+    private route: ActivatedRoute) {
     this.categoria = new Categoria();
   }
 
   ngOnInit(): void {
-    this.iniciarFormulario(this.categoria);
-  }
 
-  private iniciarFormulario(categoria: Categoria) {
+    let id = this.route.snapshot.params['id'];
 
-    this.formulario = new FormGroup({
-      id: new FormControl(categoria.id),
-      nome: new FormControl(categoria.nome, [Validators.required])
-    });
+    if (id) {
+      this.service.buscarPorId(id)
+        .pipe(first()).subscribe(dados => {
+          this.categoria = dados;
+
+          this.editar = true;
+        })
+    }
 
   }
 
   onSubmit() {
 
-    if (this.formulario.valid) {
-      this.categoria.nome = this.formulario.value.nome;
+    let observable = new Observable<Categoria>();
 
-      this.service.cadastrar(this.categoria)
-        .pipe(take(1))
-        .subscribe((dados: Categoria) => {
-          this.formulario.reset();
-          this.toast.success(`Categoria ${dados.nome} cadastrada com sucesso`, "Sucesso")
-        })
-    }
+    if (this.categoria.id)
+      observable = this.service.editar(this.categoria)
+    else
+      observable = this.service.cadastrar(this.categoria!)
+
+    observable.pipe(first())
+      .subscribe((dados: Categoria) => {
+        this.toast.success(`Categoria ${dados.nome} ${(this.categoria.id ? 'editada' : 'cadastrada')} com sucesso`, "Sucesso");
+        this.router.navigate(['categorias/listar'])
+      })
+
+  }
+
+  voltar() {
+    this.router.navigate(['listar'], { relativeTo: this.route.parent })
   }
 }
+

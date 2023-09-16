@@ -4,7 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NotasCardComponent } from './componentes/notas-card/notas-card.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NotasListaComponent } from './componentes/notas-lista/notas-lista.component';
 import { NotasNavBarComponent } from './componentes/notas-nav-bar/notas-nav-bar.component';
 import { NotasHistoricoComponent } from './componentes/notas-historico/notas-historico.component';
@@ -40,12 +40,13 @@ import { NotasFiltrarComponent } from './componentes/notas-filtrar/notas-filtrar
     AppRoutingModule,
     NgbModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
 
     ToastrModule.forRoot({
       timeOut: 5000,
-      positionClass: 'toast-bottom-right',
+      positionClass: 'toast-bottom-left',
       preventDuplicates: true,
     }),
 

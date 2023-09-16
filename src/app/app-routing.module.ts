@@ -31,7 +31,7 @@ const routes: Routes = [
   },
 
   {
-    path: "categoria",
+    path: "categorias",
     children: [{
       path: "cadastrar",
       component: CategoriaFormComponent
@@ -39,6 +39,10 @@ const routes: Routes = [
     {
       path: "listar",
       component: CategoriaTableComponent
+    },
+    {
+      path: "editar/:id",
+      component: CategoriaFormComponent
     }]
   }
 

@@ -64,6 +64,7 @@ export class NotasCardComponent implements OnInit {
     this.serviceHttp.excluirNota(id)
       .pipe(take(1)).subscribe(() => {
         this.servicoEvents.emitirExcluirNota(id)
+        this.toast.success("Nota excluída", "Sucesso")
       })
   }
 

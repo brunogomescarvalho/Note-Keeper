@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs';
 import { Categoria } from 'src/app/models/categoria';
 import { CategoriaHttpService } from 'src/app/services/httpService/categoria/categoria-http.service';
@@ -13,7 +14,10 @@ export class CategoriaTableComponent implements OnInit {
 
   categorias?: Categoria[];
 
-  constructor(private serviceCategoria: CategoriaHttpService) { }
+  constructor(
+    private serviceCategoria: CategoriaHttpService,
+    private route: ActivatedRoute,
+    private router: Router) { }
 
 
   ngOnInit(): void {
@@ -25,5 +29,17 @@ export class CategoriaTableComponent implements OnInit {
   }
 
 
+  excluir(categoria: Categoria, index: number) {
+
+    this.serviceCategoria.excluir(categoria.id!)
+      .subscribe(x => {
+        this.categorias?.splice(index, 1);
+
+      })
+  }
+
+  editar(categoria: Categoria) {
+    this.router.navigate(['editar', categoria.id], { relativeTo: this.route.parent })
+  }
 
 }

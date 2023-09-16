@@ -25,4 +25,12 @@ export class CategoriaHttpService {
     return this.service.get<Categoria>(`${this.url}/${id}`);
   }
 
+  public excluir(id: number) {
+    return this.service.delete<boolean>(`${this.url}/${id}`);
+  }
+
+  public editar(categoria: Categoria) {
+    return this.service.put<Categoria>(`${this.url}/${categoria.id}`, categoria);
+  }
+
 }

@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
-import { Component, EventEmitter, Injectable, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, take } from 'rxjs';
 import { Categoria } from 'src/app/models/categoria';
@@ -17,10 +17,6 @@ import { NotasHttpService } from 'src/app/services/httpService/notas/notas-http.
 })
 export class NotasFormComponent implements OnInit {
 
-  @Injectable({
-    providedIn: 'root'
-  })
-
   editar: boolean = false
   categorias!: Categoria[];
   categoria!: Categoria;
@@ -34,8 +30,9 @@ export class NotasFormComponent implements OnInit {
     private serviceHttp: CategoriaHttpService,
     private route: ActivatedRoute,
     private notasServiceHttp: NotasHttpService,
-    private location: Location,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private router: Router,
+    private location: Location
   ) { this.nota = new Nota() }
 
   ngOnInit(): void {
@@ -44,7 +41,6 @@ export class NotasFormComponent implements OnInit {
     this.configurarPagina();
   }
 
-  
   public atribuirTema(tema: Tema) {
     this.form.value.tema = tema
   }
@@ -68,8 +64,8 @@ export class NotasFormComponent implements OnInit {
 
       observable.pipe(take(1))
         .subscribe((dados: Nota) => {
-          this.toast.success(`Nota ${dados.id} editada com sucesso`!);
-          this.location.back();
+          this.toast.success(`Nota ${this.nota.id ? 'editada' : 'cadastrada'} com sucesso`!);
+          this.router.navigate(['/'])
         });
     }
   }
@@ -127,7 +123,7 @@ export class NotasFormComponent implements OnInit {
   }
 
   voltar() {
-    this.location.back();
+    this.location.back()
   }
 
 }
