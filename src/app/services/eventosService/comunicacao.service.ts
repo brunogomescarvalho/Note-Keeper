@@ -6,21 +6,10 @@ import { Nota, Tema } from '../../models/nota';
 })
 export class ComunicacaoService {
 
-  private salvarNota = new EventEmitter<Nota>();
-
   private excluirNota = new EventEmitter<number>();
-
-
-  emitirSalvarNota(nota: Nota) {
-    this.salvarNota.emit(nota);
-  }
 
   emitirExcluirNota(id: number) {
     this.excluirNota.emit(id);
-  }
-
-  eventSalvarNotas() {
-    return this.salvarNota.asObservable();
   }
 
   eventExcluirNotas() {

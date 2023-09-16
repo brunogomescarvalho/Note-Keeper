@@ -13,22 +13,23 @@
                         formControlName="titulo">
                 </div>
                 <div class="mb-3">
+                    <label class="form-label">Categoria</label>
+                    <select class="form-select border border-{{nota.tema}}" aria-label="Default select example"
+                        formControlName="categoria">
+                        <option *ngFor="let categoria of categorias" [ngValue]=categoria>
+                            {{categoria.nome}}
+                        </option>
+                    </select>
+                </div>
+                <div class="mb-3">
                     <label for="exampleFormControlTextarea1" class="form-label">Conteúdo</label>
                     <textarea [(ngModel)]="nota.conteudo" class="form-control border border-{{nota.tema}}"
                         formControlName="conteudo" rows="3"></textarea>
                 </div>
+
                 <div class="mb-3">
-                    <label class="form-label">Categoria</label>
-                    <select class="form-select border border-{{nota.tema}}"
-                    aria-label="Default select example" formControlName="categoria">
-                    <option *ngFor="let categoria of categorias" [ngValue]=categoria>
-                        {{categoria.nome}}
-                    </option>
-                </select>
-                </div>
-                <div class="mb-3">
-                    <app-notas-card (onEnviarTema)="atribuirTema($event)" [mostrarButtons]='false' [mostrarCores]="true"
-                        [nota]="nota"></app-notas-card>
+                    <app-notas-card (onEnviarTema)="atribuirTema($event)" [mostrarButtons]='false' [mostrarCores]='true'
+                        [tema]="tema" [nota]="nota"></app-notas-card>
                 </div>
                 <div class="mb-3">
                     <button type="submit" class="btn btn-success me-2">{{editar?'Editar':'Salvar'}}</button>

@@ -16,4 +16,8 @@ export class NotasFiltrarComponent {
     this.onEnviarCategoria.emit(c)
   }
 
+  buscarTodos() {
+    this.onEnviarCategoria.emit()
+  }
+
 }

@@ -1,27 +1,27 @@
 <section>
-    <div class="card border-{{ nota.tema }} p-0 mb-2">
-        <div class="card-header  text-bg-{{nota.tema}}">
+    <div class="card border-{{tema}} p-0 mb-2">
+        <div class="card-header  text-bg-{{tema}}">
             <h3 class="card-title fst-italic">{{nota.titulo? nota.titulo:nota.id}}</h3>
             <p>{{categoria.nome}}</p>
         </div>
         <div class="card-body">
             <p class="card-text">{{nota.conteudo}}</p>
         </div>
-        <div class="col d-flex justify-content-center gap-3 m-2" *ngIf="mostrarButtons">
-            <button (click)="arquivar(nota)" class="btn btn-outline-{{ nota.tema }}" aria-label="Arquivar"
+        <div class="d-flex justify-content-center gap-3 m-2" *ngIf="mostrarButtons">
+            <button (click)="arquivar(nota)" class="btn btn-outline-{{tema}}" aria-label="Arquivar"
                 ngbTooltip="{{nota.arquivado == true ? 'Desarquivar':'Arquivar'}}" placement="bottom">
                 <i [class]="(nota.arquivado == true? 'bi bi-upload':'bi bi-download')"></i>
             </button>
-            <button (click)="mostrarQuadroCores()" class="btn btn-outline-{{ nota.tema }}" aria-label="Tema" ngbTooltip="Tema"
-                placement="bottom">
+            <button [disabled]="btnDesabilitado" (click)="mostrarQuadroCores()" class="btn btn-outline-{{tema}}"
+                aria-label="Tema" ngbTooltip="Tema" placement="bottom">
                 <i class="bi bi-palette"></i>
             </button>
-            <button (click)="editar(nota)" class="btn btn-outline-{{ nota.tema }}" aria-label="Editar"
-                ngbTooltip="Editar" placement="bottom">
+            <button [disabled]="btnDesabilitado" (click)="editar(nota)" class="btn btn-outline-{{tema}}"
+                aria-label="Editar" ngbTooltip="Editar" placement="bottom">
                 <i class="bi bi-pen"></i>
             </button>
-            <button (click)="excluir(nota.id)" class="btn btn-outline-{{ nota.tema }}" aria-label="Editar"
-                ngbTooltip="Excluir" placement="bottom">
+            <button (click)="excluir(nota.id)" class="btn btn-outline-{{tema}}" aria-label="Editar" ngbTooltip="Excluir"
+                placement="bottom">
                 <i class="bi bi-trash"></i>
             </button>
         </div>

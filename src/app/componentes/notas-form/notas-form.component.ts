@@ -1,9 +1,9 @@
 import { Location } from '@angular/common';
-import { Component, EventEmitter, Injectable, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Injectable, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { take } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { Categoria } from 'src/app/models/categoria';
 import { Nota, Tema } from 'src/app/models/nota';
 import { CategoriaHttpService } from 'src/app/services/httpService/categoria/categoria-http.service';
@@ -22,14 +22,11 @@ export class NotasFormComponent implements OnInit {
   })
 
   editar: boolean = false
-
   categorias!: Categoria[];
-
   categoria!: Categoria;
-
   nota!: Nota;
-
   form!: FormGroup;
+  tema!: Tema;
 
   @Output() onMostrarCategoria = new EventEmitter();
 
@@ -47,6 +44,11 @@ export class NotasFormComponent implements OnInit {
     this.configurarPagina();
   }
 
+  
+  public atribuirTema(tema: Tema) {
+    this.form.value.tema = tema
+  }
+
   public onSubmit() {
     if (this.form.valid) {
       this.nota.id = this.form.value.id;
@@ -56,12 +58,19 @@ export class NotasFormComponent implements OnInit {
       this.nota.arquivado = this.form.value.arquivado;
       this.nota.categoriaId = this.form.value.categoria.id;
 
+      let observable = new Observable<Nota>();
+
       if (this.nota.id)
-        this.editarNota();
+        observable = this.notasServiceHttp.editarNota(this.nota)
       else {
-        this.cadastrarNota();
+        observable = this.notasServiceHttp.criarNota(this.nota)
       }
 
+      observable.pipe(take(1))
+        .subscribe((dados: Nota) => {
+          this.toast.success(`Nota ${dados.id} editada com sucesso`!);
+          this.location.back();
+        });
     }
   }
 
@@ -83,16 +92,12 @@ export class NotasFormComponent implements OnInit {
       conteudo: nota.conteudo,
       categoria: nota.categoriaId ? this.atribuirCategoria(nota) : null,
       arquivado: nota?.arquivado,
-      tema: nota?.tema
+      tema: this.tema = nota.tema!
     })
   }
 
   private atribuirCategoria(nota: Nota): any {
     return this.categoria = this.categorias.find(x => x.id == nota.categoriaId)!;
-  }
-
-  public atribuirTema(tema: Tema) {
-    this.form.value.tema = tema
   }
 
   private configurarPagina() {
@@ -102,25 +107,6 @@ export class NotasFormComponent implements OnInit {
       this.obterNota(id);
       this.editar = true
     }
-  }
-
-
-  private editarNota() {
-    this.notasServiceHttp.editarNota(this.nota)
-      .pipe(take(1))
-      .subscribe((dados: Nota) => {
-        this.toast.success(`Nota ${dados.id} editada com sucesso`!);
-        this.location.back();
-      });
-  }
-
-  private cadastrarNota() {
-    this.notasServiceHttp.criarNota(this.nota)
-      .pipe(take(1))
-      .subscribe((dados: Nota) => {
-        this.toast.success(`Nota ${dados.id} cadastrada com sucesso`!);
-        this.location.back();
-      });
   }
 
   private obterNota(id: any) {

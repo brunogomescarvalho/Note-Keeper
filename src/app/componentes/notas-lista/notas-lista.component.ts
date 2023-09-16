@@ -3,7 +3,7 @@ import { Nota } from '../../models/nota';
 import { ComunicacaoService } from 'src/app/services/eventosService/comunicacao.service';
 import { CategoriaHttpService } from 'src/app/services/httpService/categoria/categoria-http.service';
 import { Categoria } from 'src/app/models/categoria';
-import { take } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { NotasHttpService } from 'src/app/services/httpService/notas/notas-http.service';
 
 @Component({
@@ -37,18 +37,23 @@ export class NotasListaComponent implements OnInit {
       .subscribe((dados: Categoria[]) => {
         this.categorias = dados
       })
-
   }
 
   private registrarEventos() {
-    this.eventoSalvarNotas();
     this.eventoExcluirNota();
   }
 
 
   public eventoReceberCategoria(c: Categoria) {
-    this.serviceNota.filtrarPorCategoria(c.id!, this.buscarArquivados)
-      .pipe(take(1))
+
+    let observable = new Observable<Nota[]>();
+
+    if (c)
+      observable = this.serviceNota.filtrarPorCategoria(c.id!, this.buscarArquivados)
+    else
+      observable = this.serviceNota.selecionarTodos(this.buscarArquivados)
+
+    observable.pipe(take(1))
       .subscribe((notas: Nota[]) => {
         this.notas = notas
       })
@@ -62,13 +67,6 @@ export class NotasListaComponent implements OnInit {
     });
   }
 
-  private eventoSalvarNotas() {
-    this.eventService.eventSalvarNotas()
-      .subscribe((nota: Nota) => {
-        this.notas.push(nota);
-
-      });
-  }
 }
 
 

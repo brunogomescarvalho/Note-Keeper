@@ -29,11 +29,17 @@ export class NotasHttpService {
     return this.httpService.delete<Nota>(`${this.url}/${id}`)
   }
 
-  public selecionarTodos() {
-    return this.httpService.get<Nota[]>(this.url)
+  public selecionarTodos(arquivado: boolean) {
+    return this.httpService.get<Nota[]>(`${this.url}?arquivado=${arquivado}`)
   }
 
   public selecionarPorId(id: number): Observable<Nota> {
     return this.httpService.get<Nota>(`${this.url}/${id}?_embed=categoria`)
   }
+
+  public filtrarPorCategoria(idCategoria: number, arquivado: boolean) {
+    return this.httpService.get<Nota[]>(`${this.url}?categoriaId=${idCategoria}&arquivado=${arquivado}`)
+  }
+
+
 }

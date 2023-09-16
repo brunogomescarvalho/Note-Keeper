@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NotasCardComponent } from './componentes/notas-card/notas-card.component';
-import { NotasFormularioComponent } from './componentes/notas-formulario/notas-formulario.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NotasListaComponent } from './componentes/notas-lista/notas-lista.component';
@@ -16,13 +15,14 @@ import { CategoriaTableComponent } from './componentes/categoria-table/categoria
 import { CategoriaFormComponent } from './componentes/categoria-form/categoria-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-import { NotasEditarFormComponent } from './componentes/notas-editar-form/notas-editar-form.component';
+import { NotasFormComponent } from './componentes/notas-form/notas-form.component';
+import { NotasFiltrarComponent } from './componentes/notas-filtrar/notas-filtrar.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     NotasCardComponent,
-    NotasFormularioComponent,
     NotasListaComponent,
     NotasNavBarComponent,
     NotasHistoricoComponent,
@@ -30,7 +30,9 @@ import { NotasEditarFormComponent } from './componentes/notas-editar-form/notas-
     BarraCoresComponent,
     CategoriaTableComponent,
     CategoriaFormComponent,
-    NotasEditarFormComponent,
+    NotasFormComponent,
+    NotasFiltrarComponent,
+  
 
   ],
   imports: [
@@ -43,8 +45,8 @@ import { NotasEditarFormComponent } from './componentes/notas-editar-form/notas-
 
     ToastrModule.forRoot({
       timeOut: 5000,
+      positionClass: 'toast-bottom-right',
       preventDuplicates: true,
-      positionClass:"toast-top-rigth"
     }),
 
   ],

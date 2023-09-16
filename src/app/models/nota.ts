@@ -1,4 +1,3 @@
-import { Categoria } from "./categoria"
 
 export class Nota {
     id?: number
@@ -8,11 +7,6 @@ export class Nota {
     arquivado?: boolean
     categoriaId?: number
 
-
-    constructor() {
-        this.arquivado = false;
-    }
-
 }
 
-export type Tema = "primary" | "danger" | "warning" 
+export type Tema = "primary" | "danger" | "warning" | "secondary" | "success"

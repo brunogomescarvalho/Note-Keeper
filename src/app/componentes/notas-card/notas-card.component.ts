@@ -26,6 +26,9 @@ export class NotasCardComponent implements OnInit {
 
   @Output() onEnviarTema = new EventEmitter();
 
+  @Input() tema!: Tema;
+
+  btnDesabilitado: boolean = false;
 
   constructor(
     private servicoEvents: ComunicacaoService,
@@ -37,15 +40,22 @@ export class NotasCardComponent implements OnInit {
 
 
   ngOnInit(): void {
+
     if (this.nota.categoriaId)
       this.obterCategoria();
-  }
 
+    if (this.nota.arquivado) {
+      this.btnDesabilitado = true
+      this.tema = 'secondary'
+    }
+    else {
+      this.tema = this.nota.tema!
+    }
+  }
 
   private obterCategoria() {
     this.serviceHttpCategoria.buscarPorId(this.nota.categoriaId!)
-      .pipe(take(1))
-      .subscribe((dados: Categoria) => {
+      .pipe(take(1)).subscribe((dados: Categoria) => {
         this.categoria = dados;
       });
   }
@@ -63,13 +73,14 @@ export class NotasCardComponent implements OnInit {
 
 
   public receberCorSelecionada = (event: Event) => {
-    let tema = event as unknown
-    this.nota.tema = tema as Tema
+
+    this.tema = event as unknown as Tema
+    this.nota.tema = this.tema
 
     if (this.mostrarButtons)
       this.serviceHttp.editarNota(this.nota).pipe(take(1)).subscribe();
     else
-      this.onEnviarTema.emit(tema);
+      this.onEnviarTema.emit(this.tema);
 
   }
 

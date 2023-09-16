@@ -4,7 +4,7 @@ import { NotasHistoricoComponent } from './componentes/notas-historico/notas-his
 import { NotasHomeComponent } from './componentes/notas-home/notas-home.component';
 import { CategoriaFormComponent } from './componentes/categoria-form/categoria-form.component';
 import { CategoriaTableComponent } from './componentes/categoria-table/categoria-table.component';
-import { NotasEditarFormComponent } from './componentes/notas-editar-form/notas-editar-form.component';
+import { NotasFormComponent } from './componentes/notas-form/notas-form.component';
 
 const routes: Routes = [
   {
@@ -21,9 +21,12 @@ const routes: Routes = [
     children: [{
       path: "arquivo",
       component: NotasHistoricoComponent
-    },{
-      path:"editar/:id",
-      component:NotasEditarFormComponent
+    }, {
+      path: "editar/:id",
+      component: NotasFormComponent
+    }, {
+      path: "criar",
+      component: NotasFormComponent
     }]
   },
 
