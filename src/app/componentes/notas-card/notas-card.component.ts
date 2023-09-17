@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Nota, Tema } from '../../models/nota';
 import { ComunicacaoService } from 'src/app/services/eventosService/comunicacao.service';
 import { NotasHttpService } from 'src/app/services/httpService/notas/notas-http.service';
-import { take } from 'rxjs';
+import { first } from 'rxjs';
 import { Router } from '@angular/router';
 import { Categoria } from 'src/app/models/categoria';
 import { CategoriaHttpService } from 'src/app/services/httpService/categoria/categoria-http.service';
@@ -18,7 +18,7 @@ export class NotasCardComponent implements OnInit {
 
   @Output() onEnviarTema = new EventEmitter<Tema>();
 
-  @Output() cardClicado = new EventEmitter<void>();
+  @Output() onCardClicado = new EventEmitter<void>();
 
   @Input() tema!: Tema;
 
@@ -58,12 +58,12 @@ export class NotasCardComponent implements OnInit {
   }
 
   public eventMostrarCores() {
-    this.cardClicado.emit();
+    this.onCardClicado.emit();
   }
 
   public excluir(id: any) {
     this.serviceHttp.excluirNota(id)
-      .pipe(take(1)).subscribe(() => {
+      .pipe(first()).subscribe(() => {
         this.servicoEvents.emitirExcluirNota(id)
         this.toast.success("Nota excluída", "Sucesso")
       })
@@ -74,7 +74,7 @@ export class NotasCardComponent implements OnInit {
     this.nota.tema = this.tema
 
     if (this.mostrarButtons)
-      this.serviceHttp.editarNota(this.nota).pipe(take(1)).subscribe();
+      this.serviceHttp.editarNota(this.nota).pipe(first()).subscribe();
     else
       this.onEnviarTema.emit(this.tema);
 
@@ -83,7 +83,7 @@ export class NotasCardComponent implements OnInit {
   public arquivar(nota: Nota) {
     nota.arquivado = !nota.arquivado
     this.serviceHttp.arquivarNota(nota)
-      .pipe(take(1)).subscribe((dado: Nota) => {
+      .pipe(first()).subscribe((dado: Nota) => {
         this.servicoEvents.emitirExcluirNota(dado.id!);
         this.toast.success(`Nota ${nota.arquivado ? 'arquivada' : 'desarquivada'}`);
       });
@@ -96,7 +96,7 @@ export class NotasCardComponent implements OnInit {
 
   private obterCategoria() {
     this.serviceHttpCategoria.buscarPorId(this.nota.categoriaId!)
-      .pipe(take(1)).subscribe((dados: Categoria) => {
+      .pipe(first()).subscribe((dados: Categoria) => {
         this.categoria = dados;
       });
   }

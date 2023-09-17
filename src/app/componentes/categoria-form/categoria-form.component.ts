@@ -12,7 +12,7 @@ import { CategoriaHttpService } from 'src/app/services/httpService/categoria/cat
 })
 export class CategoriaFormComponent implements OnInit {
 
-  categoria!: Categoria;
+  categoria: Categoria;
   editar = false;
 
   constructor(
@@ -24,21 +24,20 @@ export class CategoriaFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    let id = this.route.snapshot.params['id'];
+    const id = this.route.snapshot.params['id'];
 
     if (id) {
       this.service.buscarPorId(id)
         .pipe(first()).subscribe(dados => {
           this.categoria = dados;
-
           this.editar = true;
         })
     }
-
   }
 
   onSubmit() {
+    if (!this.ehValido())
+      return
 
     let observable = new Observable<Categoria>();
 
@@ -49,10 +48,28 @@ export class CategoriaFormComponent implements OnInit {
 
     observable.pipe(first())
       .subscribe((dados: Categoria) => {
-        this.toast.success(`Categoria ${dados.nome} ${(this.categoria.id ? 'editada' : 'cadastrada')} com sucesso`, "Sucesso");
+        this.enviarMensagem(dados);
         this.router.navigate(['categorias/listar'])
       })
+  }
 
+  private enviarMensagem(dados: Categoria) {
+    this.toast.success(`Categoria ${dados.nome} 
+        ${(this.categoria.id ? 'editada' : 'cadastrada')}   
+              com sucesso`, "Sucesso");
+  }
+
+  private ehValido() {
+    if (!this.categoria.nome) {
+      this.toast.error('O nome é obrigatório')
+      return false;
+    }
+    if (this.categoria.nome.length < 3) {
+      this.toast.error('O nome precisa ter no mínimo três letras')
+      return false;
+    }
+
+    return true
   }
 
   voltar() {

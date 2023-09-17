@@ -1,25 +1,8 @@
 {
-  "nota": [
-    {
-      "titulo": "bob",
-      "conteudo": "gfgfgfg",
-      "tema": "success",
-      "id": 6,
-      "arquivado": false,
-      "categoriaId": 2
-    },
-    {
-      "titulo": "fdfdsf",
-      "conteudo": "dfdfdf",
-      "tema": "danger",
-      "id": 7,
-      "arquivado": false,
-      "categoriaId": 4
-    }
-  ],
+  "nota": [],
   "categoria": [
     {
-      "nome": "Viagem2",
+      "nome": "Viagem",
       "id": 2
     },
     {

@@ -1,9 +1,9 @@
 import { Location } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, take } from 'rxjs';
+import { Observable, first } from 'rxjs';
 import { Categoria } from 'src/app/models/categoria';
 import { Nota, Tema } from 'src/app/models/nota';
 import { CategoriaHttpService } from 'src/app/services/httpService/categoria/categoria-http.service';
@@ -17,9 +17,9 @@ import { NotasHttpService } from 'src/app/services/httpService/notas/notas-http.
 })
 export class NotasFormComponent implements OnInit {
 
+  categoria: Categoria = {};
+  categorias: Categoria[] = [];
   editar: boolean = false
-  categorias!: Categoria[];
-  categoria!: Categoria;
   nota!: Nota;
   form!: FormGroup;
   tema!: Tema;
@@ -32,13 +32,17 @@ export class NotasFormComponent implements OnInit {
     private notasServiceHttp: NotasHttpService,
     private toast: ToastrService,
     private router: Router,
-    private location: Location
-  ) { this.nota = new Nota() }
+    private location: Location,
+    private formBuilder: FormBuilder
+  ) { }
 
   ngOnInit(): void {
-    this.iniciarFormulario();
-    this.obterCategorias();
-    this.configurarPagina();
+    this.nota = this.route.snapshot.data['nota'];
+    this.iniciarFormulario(this.nota)
+    this.obterCategorias().subscribe(dados => {
+      this.categorias = dados;
+      this.form.patchValue({ 'categoria': this.atribuirCategoria(this.nota) });
+    })
   }
 
   public atribuirTema(tema: Tema) {
@@ -46,6 +50,7 @@ export class NotasFormComponent implements OnInit {
   }
 
   public onSubmit() {
+
     if (this.form.valid) {
       this.nota.id = this.form.value.id;
       this.nota.tema = this.form.value.tema;
@@ -54,72 +59,62 @@ export class NotasFormComponent implements OnInit {
       this.nota.arquivado = this.form.value.arquivado;
       this.nota.categoriaId = this.form.value.categoria.id;
 
-      let observable = new Observable<Nota>();
-
-      if (this.nota.id)
-        observable = this.notasServiceHttp.editarNota(this.nota)
-      else {
-        observable = this.notasServiceHttp.criarNota(this.nota)
-      }
-
-      observable.pipe(take(1))
-        .subscribe((dados: Nota) => {
-          this.toast.success(`Nota ${this.nota.id ? 'editada' : 'cadastrada'} com sucesso`!);
-          this.router.navigate(['/'])
-        });
+      this.salvarDados();
     }
+    else
+      this.mostrarErros();
   }
 
-  private iniciarFormulario() {
-    this.form = new FormGroup({
-      id: new FormControl(null),
-      titulo: new FormControl(null),
-      conteudo: new FormControl(null),
-      categoria: new FormControl(null),
-      arquivado: new FormControl(false),
-      tema: new FormControl('dark')
+  private salvarDados(): void {
+    let observable = new Observable<Nota>();
+
+    if (this.nota.id)
+      observable = this.notasServiceHttp.editarNota(this.nota);
+    else {
+      observable = this.notasServiceHttp.criarNota(this.nota);
+    }
+
+    observable.pipe(first()).subscribe(() => {
+      this.toast.success(`Nota ${this.nota.id ? 'editada' : 'cadastrada'} com sucesso`!);
+      this.router.navigate(['/']);
+    });
+  }
+
+
+  private mostrarErros(): void {
+    if (!this.nota.titulo || this.nota.titulo.length < 3)
+      this.toast.error("O titulo é obrigatorio com no mínimo 3 letras");
+
+    if (!this.nota.conteudo || this.nota.conteudo.length < 5)
+      this.toast.error("O conteudo é obrigatorio com no mínimo 5 letras");
+
+    if (!this.nota.categoriaId)
+      this.toast.error("A categoria é obrigatória");
+  }
+
+
+  private iniciarFormulario(nota: Nota) {
+    this.form = this.formBuilder.group({
+      id: [nota.id],
+      titulo: [nota.titulo, [Validators.required, Validators.minLength(3)]],
+      conteudo: [nota.conteudo, [Validators.required, Validators.minLength(5)]],
+      categoria: [null, [Validators.required]],
+      arquivado: [false],
+      tema: ['dark']
     })
   }
 
-  private carregarFormulario(nota: Nota) {
-    this.form.setValue({
-      id: nota?.id,
-      titulo: nota?.titulo,
-      conteudo: nota.conteudo,
-      categoria: nota.categoriaId ? this.atribuirCategoria(nota) : null,
-      arquivado: nota?.arquivado,
-      tema: this.tema = nota.tema!
-    })
+
+  private atribuirCategoria(nota: Nota): Categoria | null {
+    return nota.categoriaId ? this.categorias.find(x => x.id == nota.categoriaId)! : null
   }
 
-  private atribuirCategoria(nota: Nota): any {
-    return this.categoria = this.categorias.find(x => x.id == nota.categoriaId)!;
+  private obterCategorias(): Observable<Categoria[]> {
+    return this.serviceHttp.selecionarTodos()
   }
 
-  private configurarPagina() {
-    const id = this.route.snapshot.params["id"];
-
-    if (id) {
-      this.obterNota(id);
-      this.editar = true
-    }
-  }
-
-  private obterNota(id: any) {
-    this.notasServiceHttp.selecionarPorId(id)
-      .pipe(take(1))
-      .subscribe((dados: Nota) => {
-        this.nota = dados;
-        this.carregarFormulario(this.nota);
-      });
-  }
-
-  private obterCategorias() {
-    this.serviceHttp.selecionarTodos()
-      .pipe(take(1))
-      .subscribe((dados: Categoria[]) => {
-        this.categorias = dados;
-      });
+  public mostrarCategoria() {
+    this.categoria = this.form.value.categoria
   }
 
   voltar() {

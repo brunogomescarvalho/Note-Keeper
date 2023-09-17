@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NotasHttpService } from 'src/app/services/httpService/notas/notas-http.service';
 import { Nota } from '../../models/nota';
-import { take } from 'rxjs';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-notas-home',
@@ -21,7 +21,7 @@ export class NotasHomeComponent implements OnInit {
   private obterListaNotas() {
     this.serviceHttp
       .selecionarTodos(false)
-      .pipe(take(1))
+      .pipe(first())
       .subscribe((dados) => {
         this.notas = dados;
       });

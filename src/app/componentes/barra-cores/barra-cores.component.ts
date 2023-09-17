@@ -8,12 +8,12 @@ import { Tema } from '../../models/nota';
 })
 export class BarraCoresComponent {
 
-  @Output() public corSelecionada = new EventEmitter();
+  @Output() public onCorSelecionada = new EventEmitter();
 
   constructor() { }
 
   public enviarCor(cor: Tema) {
-    this.corSelecionada.emit(cor);
+    this.onCorSelecionada.emit(cor);
   }
 
 }

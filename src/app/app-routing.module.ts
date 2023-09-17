@@ -5,6 +5,7 @@ import { NotasHomeComponent } from './componentes/notas-home/notas-home.componen
 import { CategoriaFormComponent } from './componentes/categoria-form/categoria-form.component';
 import { CategoriaTableComponent } from './componentes/categoria-table/categoria-table.component';
 import { NotasFormComponent } from './componentes/notas-form/notas-form.component';
+import { ResolverNota } from './services/routeService/resolver-nota.service';
 
 const routes: Routes = [
   {
@@ -23,10 +24,16 @@ const routes: Routes = [
       component: NotasHistoricoComponent
     }, {
       path: "editar/:id",
-      component: NotasFormComponent
+      component: NotasFormComponent,
+      resolve: {
+        nota: ResolverNota
+      }
     }, {
       path: "criar",
-      component: NotasFormComponent
+      component: NotasFormComponent,
+      resolve: {
+        nota: ResolverNota
+      }
     }]
   },
 
