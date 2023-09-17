@@ -20,6 +20,8 @@ export class NotasListaComponent implements OnInit {
 
   @Input() buscarArquivados = false;
 
+  cardAberto?: number | null;
+
   constructor(
     private eventService: ComunicacaoService,
     private serviceCategoria: CategoriaHttpService,
@@ -28,26 +30,15 @@ export class NotasListaComponent implements OnInit {
 
   ngOnInit(): void {
     this.notas = [];
-    this.registrarEventos();
-    this.obterCategorias()
-
-  }
-
-  private obterCategorias() {
-    this.serviceCategoria.selecionarTodos()
-      .pipe(first())
-      .subscribe((dados: Categoria[]) => {
-        this.categorias = dados
-      })
-  }
-
-  private registrarEventos() {
     this.eventoExcluirNota();
+    this.obterCategorias()
   }
 
+  public eventMostrarCores(index: number) {
+    this.cardAberto = this.cardAberto === index ? null : index
+  }
 
   public eventoReceberCategoria(categoria: Categoria) {
-
     let observable = new Observable<Nota[]>();
 
     if (categoria)
@@ -63,7 +54,6 @@ export class NotasListaComponent implements OnInit {
       })
   }
 
-
   private eventoExcluirNota() {
     this.eventService.eventExcluirNotas().subscribe((id: number) => {
       let index = this.notas.findIndex(x => id == x.id);
@@ -71,6 +61,15 @@ export class NotasListaComponent implements OnInit {
     });
   }
 
-}
 
+  private obterCategorias() {
+    this.serviceCategoria.selecionarTodos()
+      .pipe(first())
+      .subscribe((dados: Categoria[]) => {
+        this.categorias = dados
+      })
+  }
+
+
+}
 

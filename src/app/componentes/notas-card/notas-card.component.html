@@ -12,10 +12,10 @@
                 ngbTooltip="{{nota.arquivado == true ? 'Desarquivar':'Arquivar'}}" placement="bottom">
                 <i [class]="(nota.arquivado == true? 'bi bi-upload':'bi bi-download')"></i>
             </button>
-            <button [disabled]="btnDesabilitado" (click)="mostrarQuadroCores()" class="btn btn-outline-{{tema}}"
-                aria-label="Tema" ngbTooltip="Tema" placement="bottom">
-                <i class="bi bi-palette"></i>
-            </button>
+            <button [disabled]="btnDesabilitado" (click)="eventMostrarCores()" class="btn btn-outline-{{tema}}"
+            aria-label="Tema" ngbTooltip="Tema" placement="bottom">
+            <i class="bi bi-palette"></i>
+        </button>
             <button [disabled]="btnDesabilitado" (click)="editar(nota)" class="btn btn-outline-{{tema}}"
                 aria-label="Editar" ngbTooltip="Editar" placement="bottom">
                 <i class="bi bi-pen"></i>
@@ -26,10 +26,10 @@
             </button>
         </div>
     </div>
-
-    <div class="mt-0" *ngIf='mostrarCores'>
+    <div class="mt-0" *ngIf="mostrarCores">
         <div class="col">
-            <app-barra-cores (corSelecionada)=receberCorSelecionada($event)></app-barra-cores>
+            <app-barra-cores (corSelecionada)="receberCorSelecionada($event)"></app-barra-cores>
         </div>
     </div>
+
 </section>

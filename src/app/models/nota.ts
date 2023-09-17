@@ -6,7 +6,7 @@ export class Nota {
     conteudo?: string
     arquivado?: boolean
     categoriaId?: number
-
+  
 }
 
 export type Tema = "primary" | "danger" | "warning" | "secondary" | "success"

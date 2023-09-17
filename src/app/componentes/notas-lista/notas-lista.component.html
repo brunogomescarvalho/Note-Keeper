@@ -1,14 +1,16 @@
 <div class="container">
     <hr>
     <div class="row">
-        <app-notas-filtrar (onEnviarCategoria)="eventoReceberCategoria($event)" [categorias]="categorias"></app-notas-filtrar>
+        <app-notas-filtrar (onEnviarCategoria)="eventoReceberCategoria($event)"
+            [categorias]="categorias"></app-notas-filtrar>
     </div>
     <div class="col">
-        <H2 [ngClass]="{'text-secondary': buscarArquivados == true}"class="text-center text-primary fs-4 p-4 mb-4">{{buscarArquivados? 'Notas Arquivadas':'Minhas Notas'}}</H2>
+        <H2 [ngClass]="{'text-secondary': buscarArquivados == true}" class="text-center text-primary fs-4 p-4 mb-4">
+            {{buscarArquivados? 'Notas Arquivadas':'Minhas Notas'}}</H2>
     </div>
     <div class="row">
-        <div *ngFor="let nota of notas" class="col-12 col-md-6 col-lg-4 col-xl-3">
-            <app-notas-card [nota]="nota"></app-notas-card>
+        <div *ngFor="let nota of notas; let i = index" class="col-12 col-md-6 col-lg-4 col-xl-3">
+            <app-notas-card [mostrarCores]="cardAberto === i" (cardClicado)="eventMostrarCores(i)" [nota]="nota"></app-notas-card>
         </div>
     </div>
 </div>

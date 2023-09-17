@@ -16,17 +16,21 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class NotasCardComponent implements OnInit {
 
-  @Input() nota: Nota = {} as Nota;
+  @Output() onEnviarTema = new EventEmitter<Tema>();
 
-  @Input() categoria: Categoria = {} as Categoria;
+  @Output() cardClicado = new EventEmitter<void>();
+
+  @Input() tema!: Tema;
+
+  @Input() indexAtual!: number
+
+  @Input() nota: Nota = {} as Nota;
 
   @Input() mostrarCores: boolean = false;
 
   @Input() mostrarButtons: boolean = true;
 
-  @Output() onEnviarTema = new EventEmitter();
-
-  @Input() tema!: Tema;
+  @Input() categoria: Categoria = {} as Categoria;
 
   btnDesabilitado: boolean = false;
 
@@ -53,11 +57,8 @@ export class NotasCardComponent implements OnInit {
     }
   }
 
-  private obterCategoria() {
-    this.serviceHttpCategoria.buscarPorId(this.nota.categoriaId!)
-      .pipe(take(1)).subscribe((dados: Categoria) => {
-        this.categoria = dados;
-      });
+  public eventMostrarCores() {
+    this.cardClicado.emit();
   }
 
   public excluir(id: any) {
@@ -68,13 +69,7 @@ export class NotasCardComponent implements OnInit {
       })
   }
 
-  public mostrarQuadroCores() {
-    this.mostrarCores = !this.mostrarCores;
-  }
-
-
   public receberCorSelecionada = (event: Event) => {
-
     this.tema = event as unknown as Tema
     this.nota.tema = this.tema
 
@@ -96,6 +91,14 @@ export class NotasCardComponent implements OnInit {
 
   public editar(nota: Nota) {
     this.router.navigate(['notas/editar', nota.id])
+  }
+
+
+  private obterCategoria() {
+    this.serviceHttpCategoria.buscarPorId(this.nota.categoriaId!)
+      .pipe(take(1)).subscribe((dados: Categoria) => {
+        this.categoria = dados;
+      });
   }
 
 }

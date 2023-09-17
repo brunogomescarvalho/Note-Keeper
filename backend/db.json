@@ -3,15 +3,23 @@
     {
       "titulo": "bob",
       "conteudo": "gfgfgfg",
-      "tema": "primary",
+      "tema": "success",
       "id": 6,
       "arquivado": false,
       "categoriaId": 2
+    },
+    {
+      "titulo": "fdfdsf",
+      "conteudo": "dfdfdf",
+      "tema": "danger",
+      "id": 7,
+      "arquivado": false,
+      "categoriaId": 4
     }
   ],
   "categoria": [
     {
-      "nome": "Viagem",
+      "nome": "Viagem2",
       "id": 2
     },
     {
