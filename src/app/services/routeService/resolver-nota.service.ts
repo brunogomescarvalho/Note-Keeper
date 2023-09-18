@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, ResolveData } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { Nota } from 'src/app/models/nota';
 import { NotasHttpService } from '../httpService/notas/notas-http.service';
@@ -7,7 +7,7 @@ import { NotasHttpService } from '../httpService/notas/notas-http.service';
 @Injectable({
   providedIn: 'root'
 })
-export class ResolverNota implements ResolveData {
+export class ResolverNota {
 
   constructor(private service: NotasHttpService) { }
 

@@ -28,11 +28,17 @@ export class CategoriaTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.obterCategoria();
+  }
 
+  private obterCategoria() {
     this.serviceCategoria.selecionarTodos()
-      .pipe(first()).subscribe((dados: Categoria[]) => {
+      .pipe(
+        first()
+      )
+      .subscribe((dados: Categoria[]) => {
         this.categorias = dados;
-      })
+      });
   }
 
   excluir(categoria: Categoria, index: number) {
@@ -57,7 +63,7 @@ export class CategoriaTableComponent implements OnInit {
 
     const modalRef = this.modalService.open(ModalConfirmacaoComponent, this.configModal);
     modalRef.componentInstance.titulo = 'Excluír Categoria'
-    modalRef.componentInstance.question = 'Confirma excluír essa categoria? '
+    modalRef.componentInstance.question = 'Confirma excluír a categoria? '
     modalRef.componentInstance.msg = 'Todas as notas relacionadas a ela também serão excluidas!';
 
     modalRef.result.then(result => {

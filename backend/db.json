@@ -1,22 +1,10 @@
 {
-  "nota": [
-    {
-      "id": 1,
-      "tema": "primary",
-      "titulo": "estudar mais",
-      "conteudo": "fdfdsffgfgfdg",
-      "arquivado": true,
-      "categoriaId": 1,
-      "categoria": {
-        "nome": "Estudos",
-        "id": 1
-      }
-    }
-  ],
+  "nota": [],
   "categoria": [
     {
-      "nome": "Estudos",
-      "id": 1
+      "nome": "Café da Tarde",
+      "id": 2,
+      "nota": []
     }
   ]
 }
