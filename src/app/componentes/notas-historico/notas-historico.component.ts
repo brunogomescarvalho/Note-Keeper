@@ -17,7 +17,10 @@ export class NotasHistoricoComponent implements OnInit {
 
   ngOnInit(): void {
     this.serviceHttp.selecionarTodos(true)
-      .pipe(first()).subscribe((dados: Nota[]) => {
+      .pipe(
+        first()
+      )
+      .subscribe((dados: Nota[]) => {
         if (dados.length == 0)
           this.toast.info('Nenhuma nota arquivada até o momento', 'Lista Vazia')
         this.notas = dados

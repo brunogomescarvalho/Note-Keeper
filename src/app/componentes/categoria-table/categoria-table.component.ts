@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { first } from 'rxjs';
 import { Categoria } from 'src/app/models/categoria';
 import { CategoriaHttpService } from 'src/app/services/httpService/categoria/categoria-http.service';
@@ -23,8 +23,8 @@ export class CategoriaTableComponent implements OnInit {
     private servicoNota: NotasHttpService,
     private route: ActivatedRoute,
     private router: Router,
-    private modalService: NgbModal) {
-
+    private modalService: NgbModal,
+    private configModal: NgbModalConfig) {
   }
 
   ngOnInit(): void {
@@ -34,7 +34,6 @@ export class CategoriaTableComponent implements OnInit {
         this.categorias = dados;
       })
   }
-
 
   excluir(categoria: Categoria, index: number) {
 
@@ -53,7 +52,10 @@ export class CategoriaTableComponent implements OnInit {
   }
 
   abrirModal(c: Categoria, index: number) {
-    const modalRef = this.modalService.open(ModalConfirmacaoComponent);
+
+    this.configModal.size = 'sm';
+
+    const modalRef = this.modalService.open(ModalConfirmacaoComponent, this.configModal);
     modalRef.componentInstance.titulo = 'Excluír Categoria'
     modalRef.componentInstance.question = 'Confirma excluír essa categoria? '
     modalRef.componentInstance.msg = 'Todas as notas relacionadas a ela também serão excluidas!';

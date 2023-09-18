@@ -1,5 +1,4 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { Nota, Tema } from '../../models/nota';
 
 @Injectable({
   providedIn: 'root'

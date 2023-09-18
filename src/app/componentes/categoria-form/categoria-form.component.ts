@@ -28,7 +28,9 @@ export class CategoriaFormComponent implements OnInit {
 
     if (id) {
       this.service.buscarPorId(id)
-        .pipe(first()).subscribe(dados => {
+        .pipe(
+          first()
+        ).subscribe(dados => {
           this.categoria = dados;
           this.editar = true;
         })
@@ -46,7 +48,10 @@ export class CategoriaFormComponent implements OnInit {
     else
       observable = this.service.cadastrar(this.categoria!)
 
-    observable.pipe(first())
+    observable
+      .pipe(
+        first()
+      )
       .subscribe((dados: Categoria) => {
         this.enviarMensagem(dados);
         this.router.navigate(['categorias/listar'])

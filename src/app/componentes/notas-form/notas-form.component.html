@@ -27,13 +27,14 @@
                         formControlName="conteudo" rows="3"></textarea>
                 </div>
                 <div class="mb-3">
-                    <app-notas-card (onEnviarTema)="atribuirTema($event)" [mostrarButtons]='false' [mostrarCores]='true'
-                        [tema]="tema" [nota]="nota"></app-notas-card>
+                    <app-notas-card (onEnviarTema)="atribuirTema($event)" [cardNoFormulario]='true'
+                        [mostrarCores]='true' [nota]="nota"></app-notas-card>
                 </div>
                 <div class="mb-3">
                     <button type="submit" class="btn btn-success me-2">{{editar?'Editar':'Salvar'}}</button>
                     <button (click)=voltar() type="button" class="btn btn-primary">Voltar</button>
                 </div>
+                <input hidden [(ngModel)]="nota.tema" type="text" formControlName="tema">
             </form>
         </div>
     </div>

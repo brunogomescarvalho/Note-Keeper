@@ -19,9 +19,10 @@ export class NotasHomeComponent implements OnInit {
   }
 
   private obterListaNotas() {
-    this.serviceHttp
-      .selecionarTodos(false)
-      .pipe(first())
+    this.serviceHttp.selecionarTodos(false)
+      .pipe(
+        first()
+      )
       .subscribe((dados) => {
         this.notas = dados;
       });

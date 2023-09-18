@@ -1,14 +1,17 @@
 <section>
     <div class="modal-header card-header  text-bg-danger">
-        <h4 class="modal-title">{{ titulo }}</h4>
+        <h5 class="modal-title">{{ titulo }}</h5>
         <button type="button" class="btn-close" aria-label="Close"
             (click)="activeModal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
-        <p class='fs-4'>{{ question }}<br><span class='fs-6 text-secondary'>{{ msg }}</span></p>
+        <p class='fs-6'>{{ question }}<br><span class='fs-8 text-secondary'>{{ msg }}</span></p>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('ok')">{{ btnOk }}</button>
-        <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('cancel')">{{ btnCancelar }}</button>
+        <button type="button" class="btn btn-sm btn-outline-dark" (click)="activeModal.close('ok')">{{ btnOk
+            }}</button>
+        <button type="button" class="btn btn-sm btn-outline-dark" (click)="activeModal.close('cancel')">{{
+            btnCancelar
+            }}</button>
     </div>
 </section>

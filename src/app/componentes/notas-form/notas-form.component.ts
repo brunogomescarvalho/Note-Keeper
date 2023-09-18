@@ -21,7 +21,6 @@ export class NotasFormComponent implements OnInit {
   editar: boolean = false
   nota!: Nota;
   form!: FormGroup;
-  tema!: Tema;
 
   @Output() onMostrarCategoria = new EventEmitter();
 
@@ -39,7 +38,6 @@ export class NotasFormComponent implements OnInit {
     this.nota = this.route.snapshot.data['nota'];
     this.iniciarFormulario(this.nota);
     this.obterCategorias();
-
   }
 
   public atribuirTema(tema: Tema) {
@@ -68,14 +66,17 @@ export class NotasFormComponent implements OnInit {
 
     if (this.nota.id)
       observable = this.notasServiceHttp.editarNota(this.nota);
-    else {
+    else
       observable = this.notasServiceHttp.criarNota(this.nota);
-    }
 
-    observable.pipe(first()).subscribe(() => {
-      this.toast.success(`Nota ${this.nota.id ? 'editada' : 'cadastrada'} com sucesso`!);
-      this.router.navigate(['/']);
-    });
+    observable
+      .pipe(
+        first()
+      )
+      .subscribe(() => {
+        this.toast.success(`Nota ${this.nota.id ? 'editada' : 'cadastrada'} com sucesso`!);
+        this.router.navigate(['/']);
+      });
   }
 
 
@@ -105,6 +106,9 @@ export class NotasFormComponent implements OnInit {
 
   private obterCategorias(): void {
     this.serviceHttp.selecionarTodos()
+      .pipe(
+        first()
+      )
       .subscribe(dados => {
         this.categorias = dados;
         this.form.patchValue({ 'categoria': this.atribuirCategoria(this.nota) });
@@ -114,7 +118,6 @@ export class NotasFormComponent implements OnInit {
   private atribuirCategoria(nota: Nota): Categoria {
     return this.categorias.find(x => x.id == nota.categoria?.id)!
   }
-
 
   public mostrarCategoria() {
     this.nota.categoria = this.form.value.categoria

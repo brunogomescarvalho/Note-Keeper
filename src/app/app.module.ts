@@ -42,17 +42,16 @@ import { ModalConfirmacaoComponent } from './componentes/modal-confirmacao/modal
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-   
+
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-bottom-left',
       preventDuplicates: true,
-    }),
-
+    })
   ],
 
- 
   providers: [NgbActiveModal],
   bootstrap: [AppComponent]
+
 })
 export class AppModule { }

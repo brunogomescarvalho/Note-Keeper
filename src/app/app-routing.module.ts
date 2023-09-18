@@ -19,38 +19,38 @@ const routes: Routes = [
   },
   {
     path: "notas",
-    children: [{
-      path: "arquivo",
-      component: NotasHistoricoComponent
-    }, {
-      path: "editar/:id",
-      component: NotasFormComponent,
-      resolve: {
-        nota: ResolverNota
-      }
-    }, {
-      path: "criar",
-      component: NotasFormComponent,
-      resolve: {
-        nota: ResolverNota
-      }
-    }]
+    children: [
+      {
+        path: "arquivo",
+        component: NotasHistoricoComponent
+      },
+      {
+        path: "editar/:id",
+        component: NotasFormComponent,
+        resolve: { nota: ResolverNota }
+      },
+      {
+        path: "criar",
+        component: NotasFormComponent,
+        resolve: { nota: ResolverNota }
+      }]
   },
 
   {
     path: "categorias",
-    children: [{
-      path: "cadastrar",
-      component: CategoriaFormComponent
-    },
-    {
-      path: "listar",
-      component: CategoriaTableComponent
-    },
-    {
-      path: "editar/:id",
-      component: CategoriaFormComponent
-    }]
+    children: [
+      {
+        path: "cadastrar",
+        component: CategoriaFormComponent
+      },
+      {
+        path: "listar",
+        component: CategoriaTableComponent
+      },
+      {
+        path: "editar/:id",
+        component: CategoriaFormComponent
+      }]
   }
 
 ];

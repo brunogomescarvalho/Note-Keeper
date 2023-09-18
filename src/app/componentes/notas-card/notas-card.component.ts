@@ -6,7 +6,6 @@ import { first } from 'rxjs';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
-
 @Component({
   selector: 'app-notas-card',
   templateUrl: './notas-card.component.html',
@@ -18,15 +17,15 @@ export class NotasCardComponent implements OnInit {
 
   @Output() onCardClicado = new EventEmitter<void>();
 
-  @Input() tema!: Tema;
-
   @Input() nota: Nota = {} as Nota;
 
   @Input() mostrarCores: boolean = false;
 
-  @Input() mostrarButtons: boolean = true;
+  @Input() cardNoFormulario: boolean = false;
 
-  btnDesabilitado: boolean = false;
+  botoesDesabilitados: boolean = false;
+
+  tema!: Tema;
 
   constructor(
     private servicoEvents: ComunicacaoService,
@@ -39,7 +38,7 @@ export class NotasCardComponent implements OnInit {
   ngOnInit(): void {
 
     if (this.nota.arquivado) {
-      this.btnDesabilitado = true
+      this.botoesDesabilitados = true
       this.tema = 'secondary'
     }
     else {
@@ -53,7 +52,10 @@ export class NotasCardComponent implements OnInit {
 
   public excluir(id: any) {
     this.serviceHttp.excluirNota(id)
-      .pipe(first()).subscribe(() => {
+      .pipe(
+        first()
+      )
+      .subscribe(() => {
         this.servicoEvents.emitirExcluirNota(id)
         this.toast.success("Nota excluída", "Sucesso")
       })
@@ -63,17 +65,23 @@ export class NotasCardComponent implements OnInit {
     this.tema = event as unknown as Tema
     this.nota.tema = this.tema
 
-    if (this.mostrarButtons)
-      this.serviceHttp.editarNota(this.nota).pipe(first()).subscribe();
-    else
+    if (this.cardNoFormulario)
       this.onEnviarTema.emit(this.tema);
-
+    else
+      this.serviceHttp.editarNota(this.nota)
+        .pipe(
+          first()
+        )
+        .subscribe();
   }
 
   public arquivar(nota: Nota) {
     nota.arquivado = !nota.arquivado
     this.serviceHttp.arquivarNota(nota)
-      .pipe(first()).subscribe((dado: Nota) => {
+      .pipe(
+        first()
+      )
+      .subscribe((dado: Nota) => {
         this.servicoEvents.emitirExcluirNota(dado.id!);
         this.toast.success(`Nota ${nota.arquivado ? 'arquivada' : 'desarquivada'}`);
       });

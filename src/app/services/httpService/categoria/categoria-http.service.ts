@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable} from '@angular/core';
 import { Observable } from 'rxjs';
 import { Categoria } from 'src/app/models/categoria';
 
@@ -11,7 +11,6 @@ export class CategoriaHttpService {
   private url: string = 'http://localhost:3000/categoria'
 
   constructor(private service: HttpClient) { }
-
 
   public selecionarTodos(): Observable<Categoria[]> {
     return this.service.get<Categoria[]>(this.url)

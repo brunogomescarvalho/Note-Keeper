@@ -46,7 +46,10 @@ export class NotasListaComponent implements OnInit {
     else
       observable = this.serviceNota.selecionarTodos(this.buscarArquivados)
 
-    observable.pipe(first())
+    observable
+      .pipe(
+        first()
+      )
       .subscribe((notas: Nota[]) => {
         if (notas.length === 0)
           this.toast.info('Nenhuma nota cadastrada até o momento!')
@@ -55,21 +58,23 @@ export class NotasListaComponent implements OnInit {
   }
 
   private eventoExcluirNota() {
-    this.eventService.eventExcluirNotas().subscribe((id: number) => {
-      let index = this.notas.findIndex(x => id == x.id);
-      this.notas.splice(index, 1);
-    });
+    this.eventService.eventExcluirNotas()
+      .subscribe((id: number) => {
+        let index = this.notas.findIndex(x => id == x.id);
+        this.notas.splice(index, 1);
+      });
   }
 
 
   private obterCategorias() {
     this.serviceCategoria.selecionarTodos()
-      .pipe(first())
+      .pipe(
+        first()
+      )
       .subscribe((dados: Categoria[]) => {
         this.categorias = dados
       })
   }
-
 
 }
 
