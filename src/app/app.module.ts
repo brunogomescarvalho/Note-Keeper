@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NotasCardComponent } from './componentes/notas-card/notas-card.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NotasListaComponent } from './componentes/notas-lista/notas-lista.component';
 import { NotasNavBarComponent } from './componentes/notas-nav-bar/notas-nav-bar.component';
@@ -17,7 +17,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { NotasFormComponent } from './componentes/notas-form/notas-form.component';
 import { NotasFiltrarComponent } from './componentes/notas-filtrar/notas-filtrar.component';
-
+import { ModalConfirmacaoComponent } from './componentes/modal-confirmacao/modal-confirmacao.component';
 
 @NgModule({
   declarations: [
@@ -32,8 +32,7 @@ import { NotasFiltrarComponent } from './componentes/notas-filtrar/notas-filtrar
     CategoriaFormComponent,
     NotasFormComponent,
     NotasFiltrarComponent,
-  
-
+    ModalConfirmacaoComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +42,7 @@ import { NotasFiltrarComponent } from './componentes/notas-filtrar/notas-filtrar
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-
+   
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-bottom-left',
@@ -51,7 +50,9 @@ import { NotasFiltrarComponent } from './componentes/notas-filtrar/notas-filtrar
     }),
 
   ],
-  providers: [],
+
+ 
+  providers: [NgbActiveModal],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

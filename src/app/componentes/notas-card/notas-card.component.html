@@ -2,7 +2,7 @@
     <div class="card border-{{tema}} p-0 mb-2">
         <div class="card-header  text-bg-{{tema}}">
             <h3 class="card-title fst-italic">{{nota.titulo? nota.titulo:nota.id}}</h3>
-            <p>{{categoria!.nome}}</p>
+            <p>{{nota.categoria?.nome}}</p>
         </div>
         <div class="card-body">
             <p class="card-text">{{nota.conteudo}}</p>

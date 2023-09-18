@@ -1,3 +1,4 @@
+import { Categoria } from "./categoria"
 
 export class Nota {
     id?: number
@@ -6,13 +7,16 @@ export class Nota {
     conteudo?: string
     arquivado?: boolean
     categoriaId?: number
+    categoria?: Categoria
 
     constructor() {
-        this.tema = "dark",
+        this.id = undefined,
+            this.tema = "dark",
             this.titulo = '',
             this.conteudo = '',
             this.arquivado = false,
-            this.categoriaId = undefined
+            this.categoriaId = undefined,
+            this.categoria = undefined
     }
 
 }

@@ -4,8 +4,6 @@ import { ComunicacaoService } from 'src/app/services/eventosService/comunicacao.
 import { NotasHttpService } from 'src/app/services/httpService/notas/notas-http.service';
 import { first } from 'rxjs';
 import { Router } from '@angular/router';
-import { Categoria } from 'src/app/models/categoria';
-import { CategoriaHttpService } from 'src/app/services/httpService/categoria/categoria-http.service';
 import { ToastrService } from 'ngx-toastr';
 
 
@@ -22,31 +20,23 @@ export class NotasCardComponent implements OnInit {
 
   @Input() tema!: Tema;
 
-  @Input() indexAtual!: number
-
   @Input() nota: Nota = {} as Nota;
 
   @Input() mostrarCores: boolean = false;
 
   @Input() mostrarButtons: boolean = true;
 
-  @Input() categoria: Categoria = {} as Categoria;
-
   btnDesabilitado: boolean = false;
 
   constructor(
     private servicoEvents: ComunicacaoService,
     private serviceHttp: NotasHttpService,
-    private serviceHttpCategoria: CategoriaHttpService,
     private router: Router,
     private toast: ToastrService
   ) { }
 
 
   ngOnInit(): void {
-
-    if (this.nota.categoriaId)
-      this.obterCategoria();
 
     if (this.nota.arquivado) {
       this.btnDesabilitado = true
@@ -91,14 +81,6 @@ export class NotasCardComponent implements OnInit {
 
   public editar(nota: Nota) {
     this.router.navigate(['notas/editar', nota.id])
-  }
-
-
-  private obterCategoria() {
-    this.serviceHttpCategoria.buscarPorId(this.nota.categoriaId!)
-      .pipe(first()).subscribe((dados: Categoria) => {
-        this.categoria = dados;
-      });
   }
 
 }

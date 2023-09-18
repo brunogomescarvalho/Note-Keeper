@@ -34,11 +34,15 @@ export class NotasHttpService {
   }
 
   public selecionarPorId(id: number): Observable<Nota> {
-    return this.httpService.get<Nota>(`${this.url}/${id}?_embed=categoria`)
+    return this.httpService.get<Nota>(`${this.url}/${id}?_expand=categoria`)
   }
 
   public filtrarPorCategoria(idCategoria: number, arquivado: boolean) {
     return this.httpService.get<Nota[]>(`${this.url}?categoriaId=${idCategoria}&arquivado=${arquivado}`)
+  }
+
+  public buscarNotasPorCategoria(idCategoria: number): Observable<Nota[]> {
+    return this.httpService.get<Nota[]>(`${this.url}?categoriaId=${idCategoria}`)
   }
 
 

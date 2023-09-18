@@ -1,17 +1,4 @@
 {
   "nota": [],
-  "categoria": [
-    {
-      "nome": "Viagem",
-      "id": 2
-    },
-    {
-      "nome": "Combustível",
-      "id": 4
-    },
-    {
-      "nome": "Supermercado",
-      "id": 5
-    }
-  ]
+  "categoria": []
 }

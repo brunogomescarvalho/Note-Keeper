@@ -17,7 +17,7 @@
                     <select (change)="mostrarCategoria()" class="form-select border border-{{nota.tema}}"
                         aria-label="Default select example" formControlName="categoria">
                         <option *ngFor="let categoria of categorias" [ngValue]=categoria>
-                            {{categoria.nome}}
+                            {{categoria?.nome}}
                         </option>
                     </select>
                 </div>
@@ -28,7 +28,7 @@
                 </div>
                 <div class="mb-3">
                     <app-notas-card (onEnviarTema)="atribuirTema($event)" [mostrarButtons]='false' [mostrarCores]='true'
-                        [categoria]="categoria" [tema]="tema" [nota]="nota"></app-notas-card>
+                        [tema]="tema" [nota]="nota"></app-notas-card>
                 </div>
                 <div class="mb-3">
                     <button type="submit" class="btn btn-success me-2">{{editar?'Editar':'Salvar'}}</button>

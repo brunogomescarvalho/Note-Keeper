@@ -22,7 +22,7 @@ export class CategoriaHttpService {
   }
 
   public buscarPorId(id: number) {
-    return this.service.get<Categoria>(`${this.url}/${id}`);
+    return this.service.get<Categoria>(`${this.url}/${id}?_embed=nota`);
   }
 
   public excluir(id: number) {

@@ -17,7 +17,6 @@ import { NotasHttpService } from 'src/app/services/httpService/notas/notas-http.
 })
 export class NotasFormComponent implements OnInit {
 
-  categoria: Categoria = {};
   categorias: Categoria[] = [];
   editar: boolean = false
   nota!: Nota;
@@ -38,11 +37,9 @@ export class NotasFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.nota = this.route.snapshot.data['nota'];
-    this.iniciarFormulario(this.nota)
-    this.obterCategorias().subscribe(dados => {
-      this.categorias = dados;
-      this.form.patchValue({ 'categoria': this.atribuirCategoria(this.nota) });
-    })
+    this.iniciarFormulario(this.nota);
+    this.obterCategorias();
+
   }
 
   public atribuirTema(tema: Tema) {
@@ -57,7 +54,8 @@ export class NotasFormComponent implements OnInit {
       this.nota.titulo = this.form.value.titulo;
       this.nota.conteudo = this.form.value.conteudo;
       this.nota.arquivado = this.form.value.arquivado;
-      this.nota.categoriaId = this.form.value.categoria.id;
+      this.nota.categoria = this.form.value.categoria;
+      this.nota.categoriaId = this.form.value.categoria.id
 
       this.salvarDados();
     }
@@ -88,7 +86,7 @@ export class NotasFormComponent implements OnInit {
     if (!this.nota.conteudo || this.nota.conteudo.length < 5)
       this.toast.error("O conteudo é obrigatorio com no mínimo 5 letras");
 
-    if (!this.nota.categoriaId)
+    if (!this.nota.categoria)
       this.toast.error("A categoria é obrigatória");
   }
 
@@ -100,21 +98,26 @@ export class NotasFormComponent implements OnInit {
       conteudo: [nota.conteudo, [Validators.required, Validators.minLength(5)]],
       categoria: [null, [Validators.required]],
       arquivado: [false],
-      tema: ['dark']
+      tema: [nota.tema]
     })
   }
 
 
-  private atribuirCategoria(nota: Nota): Categoria | null {
-    return nota.categoriaId ? this.categorias.find(x => x.id == nota.categoriaId)! : null
+  private obterCategorias(): void {
+    this.serviceHttp.selecionarTodos()
+      .subscribe(dados => {
+        this.categorias = dados;
+        this.form.patchValue({ 'categoria': this.atribuirCategoria(this.nota) });
+      })
   }
 
-  private obterCategorias(): Observable<Categoria[]> {
-    return this.serviceHttp.selecionarTodos()
+  private atribuirCategoria(nota: Nota): Categoria {
+    return this.categorias.find(x => x.id == nota.categoria?.id)!
   }
+
 
   public mostrarCategoria() {
-    this.categoria = this.form.value.categoria
+    this.nota.categoria = this.form.value.categoria
   }
 
   voltar() {

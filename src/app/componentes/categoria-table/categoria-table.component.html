@@ -8,7 +8,7 @@
     <div class="row justify-content-center">
         <div class="col-lg-6  col-md-8 col-sm-12">
             <div class="input-group mb-3 col-lg-6 col-md-8 col-sm-12">
-                <a class="btn btn-sm btn-outline-secondary" type="button"
+                <a class="btn btn-sm btn-outline-success" type="button"
                     routerLink="../../categorias/cadastrar">Cadastrar nova Categoria</a>
             </div>
             <table class="table">
@@ -25,10 +25,8 @@
                         <td>{{categoria?.nome}}</td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                <a (click)="editar(categoria)" type="button"
-                                    class="btn btn-sm btn-warning">Editar</a>
-                                    <a (click)="excluir(categoria,i)" type="button"
-                                        class="btn btn-sm btn-danger">Excluir</a>
+                                <a (click)="editar(categoria)" type="button" class="btn btn-sm btn-warning">Editar</a>
+                                <a (click)="abrirModal(categoria,i)" type="button" class="btn btn-sm btn-danger">Excluir</a>
                             </div>
                         </td>
                     </tr>
@@ -36,5 +34,5 @@
             </table>
         </div>
     </div>
-
+    
 </div>

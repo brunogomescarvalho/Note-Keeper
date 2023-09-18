@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, ResolveData } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { Nota } from 'src/app/models/nota';
