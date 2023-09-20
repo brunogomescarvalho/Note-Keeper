@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Nota } from 'src/app/models/nota';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotasHttpService {
 
-  private url = "http://localhost:3000/nota"
+  private url = `${environment.API_URL}/api/nota`
 
   constructor(private httpService: HttpClient) { }
 
