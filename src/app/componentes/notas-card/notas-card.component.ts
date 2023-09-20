@@ -1,10 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Nota, Tema } from '../../models/nota';
-import { ComunicacaoService } from 'src/app/services/eventosService/comunicacao.service';
-import { NotasHttpService } from 'src/app/services/httpService/notas/notas-http.service';
-import { first } from 'rxjs';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-notas-card',
@@ -17,6 +13,12 @@ export class NotasCardComponent implements OnInit {
 
   @Output() onCardClicado = new EventEmitter<void>();
 
+  @Output() onArquivarClicado = new EventEmitter<Nota>();
+
+  @Output() onExcluirNota = new EventEmitter<Nota>();
+
+  @Output() onAlterarCorCard = new EventEmitter<Nota>();
+
   @Input() nota: Nota = {} as Nota;
 
   @Input() mostrarCores: boolean = false;
@@ -27,12 +29,7 @@ export class NotasCardComponent implements OnInit {
 
   tema!: Tema;
 
-  constructor(
-    private servicoEvents: ComunicacaoService,
-    private serviceHttp: NotasHttpService,
-    private router: Router,
-    private toast: ToastrService
-  ) { }
+  constructor(private router: Router) { }
 
 
   ngOnInit(): void {
@@ -50,15 +47,8 @@ export class NotasCardComponent implements OnInit {
     this.onCardClicado.emit();
   }
 
-  public excluir(id: any) {
-    this.serviceHttp.excluirNota(id)
-      .pipe(
-        first()
-      )
-      .subscribe(() => {
-        this.servicoEvents.emitirExcluirNota(id)
-        this.toast.success("Nota excluída", "Sucesso")
-      })
+  public excluir(nota: Nota) {
+    this.onExcluirNota.emit(nota)
   }
 
   public receberCorSelecionada = (event: Event) => {
@@ -68,23 +58,11 @@ export class NotasCardComponent implements OnInit {
     if (this.cardNoFormulario)
       this.onEnviarTema.emit(this.tema);
     else
-      this.serviceHttp.editarNota(this.nota)
-        .pipe(
-          first()
-        )
-        .subscribe();
+    this.onAlterarCorCard.emit(this.nota);
   }
 
   public arquivar(nota: Nota) {
-    nota.arquivado = !nota.arquivado
-    this.serviceHttp.arquivarNota(nota)
-      .pipe(
-        first()
-      )
-      .subscribe((dado: Nota) => {
-        this.servicoEvents.emitirExcluirNota(dado.id!);
-        this.toast.success(`Nota ${nota.arquivado ? 'arquivada' : 'desarquivada'}`);
-      });
+    this.onArquivarClicado.emit(nota)
   }
 
   public editar(nota: Nota) {

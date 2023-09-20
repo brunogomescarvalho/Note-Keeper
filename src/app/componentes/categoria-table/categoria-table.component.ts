@@ -46,10 +46,10 @@ export class CategoriaTableComponent implements OnInit {
     this.servicoNota.buscarNotasPorCategoria(categoria.id!).subscribe(notas => {
       if (notas.length > 0)
         notas.forEach((x: Nota) => this.servicoNota.excluirNota(Number(x.id)).subscribe())
-    })
 
-    this.serviceCategoria.excluir(categoria.id!).subscribe(() => {
-      this.categorias?.splice(index, 1);
+      this.serviceCategoria.excluir(categoria.id!).subscribe(() => {
+        this.categorias?.splice(index, 1);
+      })
     })
   }
 

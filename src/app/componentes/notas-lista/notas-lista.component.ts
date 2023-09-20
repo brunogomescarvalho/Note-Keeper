@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Nota } from '../../models/nota';
-import { ComunicacaoService } from 'src/app/services/eventosService/comunicacao.service';
 import { CategoriaHttpService } from 'src/app/services/httpService/categoria/categoria-http.service';
 import { Categoria } from 'src/app/models/categoria';
 import { Observable, first } from 'rxjs';
@@ -23,14 +22,12 @@ export class NotasListaComponent implements OnInit {
   cardAberto?: number | null;
 
   constructor(
-    private eventService: ComunicacaoService,
     private serviceCategoria: CategoriaHttpService,
     private serviceNota: NotasHttpService,
     private toast: ToastrService) { }
 
   ngOnInit(): void {
     this.notas = [];
-    this.eventoExcluirNota();
     this.obterCategorias()
   }
 
@@ -57,14 +54,18 @@ export class NotasListaComponent implements OnInit {
       })
   }
 
-  private eventoExcluirNota() {
-    this.eventService.eventExcluirNotas()
-      .subscribe((id: number) => {
-        let index = this.notas.findIndex(x => id == x.id);
+  public excluirNota(nota: Nota) {
+    this.serviceNota.excluirNota(Number(nota.id))
+      .pipe(
+        first()
+      )
+      .subscribe(() => {
+        let index = this.notas.findIndex(x => nota.id == x.id);
         this.notas.splice(index, 1);
-      });
-  }
+        this.toast.success("Nota excluída", "Sucesso")
+      })
 
+  }
 
   private obterCategorias() {
     this.serviceCategoria.selecionarTodos()
@@ -74,6 +75,27 @@ export class NotasListaComponent implements OnInit {
       .subscribe((dados: Categoria[]) => {
         this.categorias = dados
       })
+  }
+
+  public arquivarClicado(nota: Nota) {
+    nota.arquivado = !nota.arquivado
+    this.serviceNota.arquivarNota(nota)
+      .pipe(
+        first()
+      )
+      .subscribe((dado: Nota) => {
+        let index = this.notas.findIndex(x => dado.id == x.id);
+        this.notas.splice(index, 1);
+        this.toast.success(`Nota ${nota.arquivado ? 'arquivada' : 'desarquivada'}`);
+      });
+  }
+
+  public editarCorCard(nota: Nota) {
+    this.serviceNota.editarNota(nota)
+      .pipe(
+        first()
+      )
+      .subscribe();
   }
 
 }

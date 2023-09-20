@@ -10,7 +10,14 @@
     </div>
     <div class="row">
         <div *ngFor="let nota of notas; let i = index" class="col-12 col-md-6 col-lg-4 col-xl-3">
-            <app-notas-card [mostrarCores]="cardAberto === i" (onCardClicado)="eventMostrarCores(i)" [nota]="nota"></app-notas-card>
+            <app-notas-card 
+            [nota]="nota"
+            [mostrarCores]="cardAberto === i" 
+            (onArquivarClicado)="arquivarClicado(nota)"
+            (onCardClicado)="eventMostrarCores(i)" 
+            (onExcluirNota)="excluirNota(nota)"
+            (onAlterarCorCard)="editarCorCard(nota)">
+        </app-notas-card>
         </div>
     </div>
 </div>
